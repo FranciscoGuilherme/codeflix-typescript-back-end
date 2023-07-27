@@ -1,7 +1,8 @@
 {
     "conventionalCommits.scopes": [
         "build",
-        "config"
+        "config",
+        "domain"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#fbed80",
