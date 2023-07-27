@@ -1,0 +1,27 @@
+{
+  "name": "micro-videos",
+  "version": "1.0.0",
+  "description": "Admin do catalogo de videos",
+  "main": "index.js",
+  "scripts": {
+    "ts-node": "ts-node",
+    "tsc": "tsc",
+    "clean:tsc": "rm tsconfig.tsbuildinfo",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FranciscoGuilherme/codeflix-typescript-back-end.git"
+  },
+  "author": "Francisco Guilherme Antunes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FranciscoGuilherme/codeflix-typescript-back-end/issues"
+  },
+  "homepage": "https://github.com/FranciscoGuilherme/codeflix-typescript-back-end#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
