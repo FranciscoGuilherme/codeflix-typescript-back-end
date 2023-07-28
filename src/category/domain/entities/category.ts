@@ -7,6 +7,20 @@ export type CategoryProperties = {
 
 export class Category {
   constructor(public readonly props: CategoryProperties) {
-    Object.assign(this, props);
+    this.description = props.description;
+    this.createdAt = props.createdAt;
+    this.isActive = props.isActive;
+  }
+
+  private set description(value: string | undefined) {
+    this.props.description = value ?? undefined;
+  }
+
+  private set isActive(value: boolean | undefined) {
+    this.props.isActive = value ?? true;
+  }
+
+  private set createdAt(value: Date | undefined) {
+    this.props.createdAt = value ?? new Date();
   }
 }
