@@ -1,3 +1,4 @@
+import { omit } from "lodash";
 import { Category } from "./category";
 
 describe("Unit tests for entity Category", (): void => {
@@ -13,8 +14,13 @@ describe("Unit tests for entity Category", (): void => {
 
     expect(category.props.name).toBe("Movie");
     expect(category.props.description).toBeUndefined();
-    expect(category.props.isActive).toBeUndefined();
-    expect(category.props.createdAt).toBeUndefined();
+    expect(category.props.isActive).toBeTruthy();
+    expect(category.props.createdAt).toBeInstanceOf(Date);
+    expect(omit(category.props, "createdAt")).toStrictEqual({
+      name: "Movie",
+      description: undefined,
+      isActive: true
+    });
   });
 
   it("should validate constructor category", (): void => {
@@ -31,5 +37,10 @@ describe("Unit tests for entity Category", (): void => {
     expect(category.props.isActive).toBeFalsy();
     expect(category.props.createdAt).toBe(date);
     expect(category.props.createdAt).toBeInstanceOf(Date);
+    expect(omit(category.props, "createdAt")).toStrictEqual({
+      name: "Movie",
+      description: "Some description",
+      isActive: false
+    });
   });
 });
