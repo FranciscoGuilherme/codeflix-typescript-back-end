@@ -43,4 +43,23 @@ describe("Unit tests for entity Category", (): void => {
       isActive: false
     });
   });
+
+  it("should validate all properties getters and setters", () => {
+    const date = new Date();
+    const category = new Category({ name: "Documentary" });
+
+    expect(category.name).toBe("Documentary")
+    expect(category.description).toBeUndefined();
+    expect(category.isActive).toBeTruthy();
+    expect(category.createdAt).toBeInstanceOf(Date);
+
+    category["description"] = "This is a documentary";
+    category["isActive"] = false;
+    category["createdAt"] = date;
+
+    expect(category.description).toBe("This is a documentary");
+    expect(category.isActive).toBeFalsy();
+    expect(category.createdAt).toBe(date);
+    expect(category.createdAt).toBeInstanceOf(Date);
+  });
 });
