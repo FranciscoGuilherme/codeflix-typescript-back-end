@@ -3,7 +3,8 @@
         "build",
         "config",
         "domain",
-        "docs"
+        "docs",
+        "entity-category"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#fbed80",
