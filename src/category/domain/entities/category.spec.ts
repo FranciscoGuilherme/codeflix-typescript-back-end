@@ -44,7 +44,7 @@ describe("Unit tests for entity Category", (): void => {
     });
   });
 
-  it("should validate all properties getters and setters", () => {
+  it("should validate all properties getters and setters", (): void => {
     const date = new Date();
     const category = new Category({ name: "Documentary" });
 
