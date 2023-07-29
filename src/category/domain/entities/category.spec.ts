@@ -1,5 +1,6 @@
 import { omit } from "lodash";
 import { Category } from "./category";
+import { validate as uuidValidate } from "uuid";
 
 describe("Unit tests for entity Category", (): void => {
   it("should instantiate Category", (): void => {
@@ -61,5 +62,28 @@ describe("Unit tests for entity Category", (): void => {
     expect(category.isActive).toBeFalsy();
     expect(category.createdAt).toBe(date);
     expect(category.createdAt).toBeInstanceOf(Date);
+  });
+
+  it("should create a category with invalid id property", (): void => {
+    const categoryCases = [
+      { category: new Category({ name: "Movie" }), valid: true },
+      { category: new Category({ name: "Movie" }, "1"), valid: false },
+      { category: new Category({ name: "Movie" }, null), valid: true },
+      { category: new Category({ name: "Movie" }, undefined), valid: true }
+    ];
+
+    categoryCases.forEach(item => {
+      expect(item.category.id).not.toBeNull();
+      expect(uuidValidate(item.category.id)).toBe(item.valid);
+    });
+  });
+
+  it("should create a category with id property fixed", (): void => {
+    const uuid: string = "9a3119a2-5d61-413f-816b-1b29e6bcda8b";
+    const category = new Category({ name: "Movie" }, uuid);
+
+    expect(category.id).toBe(uuid);
+    expect(category.id).not.toBeNull();
+    expect(uuidValidate(category.id)).toBeTruthy();
   });
 });
