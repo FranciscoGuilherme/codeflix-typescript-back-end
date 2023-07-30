@@ -54,9 +54,9 @@ describe("Unit tests for entity Category", (): void => {
     expect(category.isActive).toBeTruthy();
     expect(category.createdAt).toBeInstanceOf(Date);
 
-    category["description"] = "This is a documentary";
-    category["isActive"] = false;
-    category["createdAt"] = date;
+    category["_description"] = "This is a documentary";
+    category["_isActive"] = false;
+    category["_createdAt"] = date;
 
     expect(category.description).toBe("This is a documentary");
     expect(category.isActive).toBeFalsy();
