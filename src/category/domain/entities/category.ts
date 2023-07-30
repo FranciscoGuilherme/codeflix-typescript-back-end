@@ -12,9 +12,9 @@ export class Category {
 
   constructor(public readonly props: CategoryProperties, id?: string) {
     this.id = id || uuidv4();
-    this.description = props.description;
-    this.createdAt = props.createdAt;
-    this.isActive = props.isActive;
+    this._description = props.description;
+    this._createdAt = props.createdAt;
+    this._isActive = props.isActive;
   }
 
   get name(): string {
@@ -33,15 +33,15 @@ export class Category {
     return this.props.createdAt;
   }
 
-  private set description(value: string | undefined) {
+  private set _description(value: string | undefined) {
     this.props.description = value ?? undefined;
   }
 
-  private set isActive(value: boolean | undefined) {
+  private set _isActive(value: boolean | undefined) {
     this.props.isActive = value ?? true;
   }
 
-  private set createdAt(value: Date | undefined) {
+  private set _createdAt(value: Date | undefined) {
     this.props.createdAt = value ?? new Date();
   }
 }
