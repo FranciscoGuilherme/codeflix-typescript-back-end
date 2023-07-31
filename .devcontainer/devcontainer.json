@@ -1,0 +1,20 @@
+{
+	"name": "Micro Videos Typescript",
+	"dockerComposeFile": [
+		"../docker-compose.yaml",
+		"docker-compose.yml"
+	],
+	"service": "app",
+	"workspaceFolder": "/home/node/app",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"sonarsource.sonarlint-vscode"
+			]
+		},
+		"settings": {
+			"terminal.integrated.defaultProfile.linux": "zsh"
+		}
+	},
+	"remoteUser": "node"
+}
