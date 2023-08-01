@@ -6,7 +6,8 @@
         "docs",
         "entity-category",
         "value-objects",
-        "seedwork"
+        "seedwork",
+        "project"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#fbed80",
