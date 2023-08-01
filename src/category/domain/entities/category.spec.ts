@@ -1,6 +1,6 @@
 import { omit } from "lodash";
 import { Category } from "./category";
-import { validate as uuidValidate } from "uuid";
+import UniqueEntityId from "../../../@seedwork/domain/unique-entity-id.vo";
 
 describe("Unit tests for entity Category", (): void => {
   it("should instantiate Category", (): void => {
@@ -25,7 +25,7 @@ describe("Unit tests for entity Category", (): void => {
   });
 
   it("should validate constructor category", (): void => {
-    const date = new Date();
+    const date: Date = new Date();
     const category: Category = new Category({
       name: "Movie",
       description: "Some description",
@@ -46,8 +46,8 @@ describe("Unit tests for entity Category", (): void => {
   });
 
   it("should validate all properties getters and setters", (): void => {
-    const date = new Date();
-    const category = new Category({ name: "Documentary" });
+    const date: Date = new Date();
+    const category: Category = new Category({ name: "Documentary" });
 
     expect(category.name).toBe("Documentary")
     expect(category.description).toBeUndefined();
@@ -65,25 +65,26 @@ describe("Unit tests for entity Category", (): void => {
   });
 
   it("should create a category with invalid id property", (): void => {
-    const categoryCases = [
-      { category: new Category({ name: "Movie" }), valid: true },
-      { category: new Category({ name: "Movie" }, "1"), valid: false },
-      { category: new Category({ name: "Movie" }, null), valid: true },
-      { category: new Category({ name: "Movie" }, undefined), valid: true }
+    type CategoryData = { category: Category; valid: boolean; };
+    const categoryCases: CategoryData[] = [
+      { category: new Category({ name: "Movie" }), valid: false },
+      { category: new Category({ name: "Movie" }, null), valid: false },
+      { category: new Category({ name: "Movie" }, undefined), valid: false },
+      { category: new Category({ name: "Movie" }, new UniqueEntityId()), valid: true }
     ];
 
     categoryCases.forEach(item => {
       expect(item.category.id).not.toBeNull();
-      expect(uuidValidate(item.category.id)).toBe(item.valid);
+      expect(item.category.id).toBeInstanceOf(UniqueEntityId);
     });
   });
 
   it("should create a category with id property fixed", (): void => {
     const uuid: string = "9a3119a2-5d61-413f-816b-1b29e6bcda8b";
-    const category = new Category({ name: "Movie" }, uuid);
+    const category: Category = new Category({ name: "Movie" }, new UniqueEntityId(uuid));
 
-    expect(category.id).toBe(uuid);
     expect(category.id).not.toBeNull();
-    expect(uuidValidate(category.id)).toBeTruthy();
+    expect(category.id).toBeInstanceOf(UniqueEntityId);
+    expect(Object.getOwnPropertyNames(category.id)).toStrictEqual([ 'id' ]);
   });
 });
