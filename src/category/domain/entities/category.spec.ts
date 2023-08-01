@@ -1,6 +1,6 @@
 import { omit } from "lodash";
 import { Category } from "./category";
-import UniqueEntityId from "../../../@seedwork/domain/unique-entity-id.vo";
+import UniqueEntityId from "@seedwork/domain/unique-entity-id.vo";
 
 describe("Unit tests for entity Category", (): void => {
   it("should instantiate Category", (): void => {

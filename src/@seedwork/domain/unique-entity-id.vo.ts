@@ -1,5 +1,5 @@
 import { v4 as uuidv4, validate as uuidValidate } from "uuid";
-import InvalidUuidError from "../errors/invalid-uuid.error";
+import InvalidUuidError from "@seedwork/errors/invalid-uuid.error";
 
 export default class UniqueEntityId {
   constructor(public readonly id?: string) {

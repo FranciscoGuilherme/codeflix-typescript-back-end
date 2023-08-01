@@ -7,5 +7,8 @@ export default {
   testRegex: ".*\\..*spec\\.ts$",
   transform: {
     "^.+\\.ts?$": ["@swc/jest"]
+  },
+  moduleNameMapper: {
+    '^@seedwork/(.*)$': '<rootDir>/@seedwork/$1',
   }
 };

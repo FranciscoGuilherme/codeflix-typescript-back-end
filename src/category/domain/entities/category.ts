@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
-import UniqueEntityId from "../../../@seedwork/domain/unique-entity-id.vo";
+import UniqueEntityId from "@seedwork/domain/unique-entity-id.vo";
 
 export type CategoryProperties = {
   name: string;
