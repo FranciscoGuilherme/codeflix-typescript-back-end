@@ -1,6 +1,6 @@
 import { omit } from "lodash";
 import { Category } from "./category";
-import UniqueEntityId from "@seedwork/domain/unique-entity-id.vo";
+import UniqueEntityId from "@seedwork/domain/value-objects/unique-entity-id.vo";
 
 describe("Unit tests for entity Category", (): void => {
   it("should instantiate Category", (): void => {
@@ -67,7 +67,7 @@ describe("Unit tests for entity Category", (): void => {
   it("should create a category with invalid id property", (): void => {
     type CategoryData = { category: Category; valid: boolean; };
     const categoryCases: CategoryData[] = [
-      { category: new Category({ name: "Movie" }), valid: false },
+      { category: new Category({ name: "Movie" }), valid: true },
       { category: new Category({ name: "Movie" }, null), valid: false },
       { category: new Category({ name: "Movie" }, undefined), valid: false },
       { category: new Category({ name: "Movie" }, new UniqueEntityId()), valid: true }
@@ -84,7 +84,7 @@ describe("Unit tests for entity Category", (): void => {
     const category: Category = new Category({ name: "Movie" }, new UniqueEntityId(uuid));
 
     expect(category.id).not.toBeNull();
+    expect(category.id.value).toBe(uuid);
     expect(category.id).toBeInstanceOf(UniqueEntityId);
-    expect(Object.getOwnPropertyNames(category.id)).toStrictEqual([ 'id' ]);
   });
 });
