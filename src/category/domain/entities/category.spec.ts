@@ -87,4 +87,33 @@ describe("Unit tests for entity Category", (): void => {
     expect(category.id).toBe(uuid);
     expect(typeof category.id).toBe("string");
   });
+
+  it("should update name property", (): void => {
+    const category: Category = new Category({ name: "Serie" });
+    category.update("Documentary");
+
+    expect(category.name).toBe("Documentary");
+    expect(category.description).toBeUndefined();
+  });
+
+  it("should update name and description properties", (): void => {
+    const category: Category = new Category({ name: "Serie" });
+    category.update("Documentary", "This is a documentary");
+
+    expect(category.name).toBe("Documentary");
+    expect(category.description).toBe("This is a documentary");
+  });
+
+  it("should deactivate a category", (): void => {
+    const category: Category = new Category({ name: "Serie" });
+    category.deactivate();
+    expect(category.isActive).toBeFalsy();
+  });
+
+  it("should activate after deactivate a category", (): void => {
+    const category: Category = new Category({ name: "Serie", isActive: false });
+    category.activate();
+
+    expect(category.isActive).toBeTruthy();
+  });
 });
