@@ -75,7 +75,7 @@ describe("Unit tests for entity Category", (): void => {
 
     categoryCases.forEach(item => {
       expect(item.category.id).not.toBeNull();
-      expect(item.category.id).toBeInstanceOf(UniqueEntityId);
+      expect(typeof item.category.id).toBe("string");
     });
   });
 
@@ -84,7 +84,7 @@ describe("Unit tests for entity Category", (): void => {
     const category: Category = new Category({ name: "Movie" }, new UniqueEntityId(uuid));
 
     expect(category.id).not.toBeNull();
-    expect(category.id.value).toBe(uuid);
-    expect(category.id).toBeInstanceOf(UniqueEntityId);
+    expect(category.id).toBe(uuid);
+    expect(typeof category.id).toBe("string");
   });
 });
