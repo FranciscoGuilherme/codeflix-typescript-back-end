@@ -14,7 +14,7 @@ export default abstract class ValueObject<Value = any> {
       return "null";
     }
 
-    if (typeof this.value === "object") {
+    if (typeof this.value === "object" && !(this.value instanceof Date)) {
       return JSON.stringify(this.value);
     }
 
