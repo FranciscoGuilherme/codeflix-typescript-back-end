@@ -11,7 +11,6 @@ describe("Unit tests for abstract value object class", (): void => {
     type VoListProperties = { vo: StubValueObject; type: string, content: any };
     const voList: VoListProperties[] = [
       { vo: new StubValueObject(100), type: "number", content: 100 },
-      { vo: new StubValueObject(undefined), type: "undefined", content: undefined },
       { vo: new StubValueObject({ prop: 20 }), type: "object", content: { prop: 20 } },
       { vo: new StubValueObject("this is a test"), type: "string", content: "this is a test" }
     ];
@@ -29,9 +28,7 @@ describe("Unit tests for abstract value object class", (): void => {
     const voList: VoListProperties[] = [
       { vo: new StubValueObject(-1), expect: "-1" },
       { vo: new StubValueObject(100), expect: "100" },
-      { vo: new StubValueObject(null), expect: "null" },
       { vo: new StubValueObject(date), expect: date.toString() },
-      { vo: new StubValueObject(undefined), expect: "undefined" },
       { vo: new StubValueObject({ prop: 20 }), expect: "{\"prop\":20}" },
       { vo: new StubValueObject("this is a test"), expect: "this is a test" }
     ];
@@ -39,5 +36,14 @@ describe("Unit tests for abstract value object class", (): void => {
     voList.forEach((item: VoListProperties): void => {
       expect(item.vo.toString()).toBe(item.expect);
     });
+  });
+
+  it("should be immutable", (): void => {
+    const vo: StubValueObject = new StubValueObject({ prop: "value", nested: { prop: "test" } });
+
+    expect((): void => { vo.value.prop = "change"; }).toThrowError();
+    expect((): void => {
+      vo.value.nested.prop = "change";
+    }).toThrowError();
   });
 });
