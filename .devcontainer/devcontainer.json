@@ -9,7 +9,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"sonarsource.sonarlint-vscode"
+				"sonarsource.sonarlint-vscode",
+				"firsttris.vscode-jest-runner"
 			]
 		},
 		"settings": {
