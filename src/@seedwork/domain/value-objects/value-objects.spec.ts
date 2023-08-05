@@ -22,4 +22,22 @@ describe("Unit tests for abstract value object class", (): void => {
       expect(item.vo.value).toStrictEqual(item.content);
     });
   });
+
+  it("should convert a bunch of values to string successfully", ():void => {
+    const date: Date = new Date();
+    type VoListProperties = { vo: StubValueObject; expect: string };
+    const voList: VoListProperties[] = [
+      { vo: new StubValueObject(-1), expect: "-1" },
+      { vo: new StubValueObject(100), expect: "100" },
+      { vo: new StubValueObject(null), expect: "null" },
+      { vo: new StubValueObject(date), expect: date.toString() },
+      { vo: new StubValueObject(undefined), expect: "undefined" },
+      { vo: new StubValueObject({ prop: 20 }), expect: "{\"prop\":20}" },
+      { vo: new StubValueObject("this is a test"), expect: "this is a test" }
+    ];
+
+    voList.forEach((item: VoListProperties): void => {
+      expect(item.vo.toString()).toBe(item.expect);
+    });
+  });
 });
