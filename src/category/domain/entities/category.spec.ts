@@ -3,6 +3,14 @@ import { Category } from "./category";
 import UniqueEntityId from "@seedwork/domain/value-objects/unique-entity-id.vo";
 
 describe("Unit tests for entity Category", (): void => {
+  beforeEach((): void => {
+    Category.validate = jest.fn();
+  });
+
+  afterEach((): void => {
+    expect(Category.validate).toHaveBeenCalled();
+  });
+
   it("should instantiate Category", (): void => {
     const category: Category = new Category({ name: "Movie" });
 
@@ -94,6 +102,7 @@ describe("Unit tests for entity Category", (): void => {
 
     expect(category.name).toBe("Documentary");
     expect(category.description).toBeUndefined();
+    expect(Category.validate).toBeCalledTimes(2);
   });
 
   it("should update name and description properties", (): void => {
@@ -102,6 +111,7 @@ describe("Unit tests for entity Category", (): void => {
 
     expect(category.name).toBe("Documentary");
     expect(category.description).toBe("This is a documentary");
+    expect(Category.validate).toBeCalledTimes(2);
   });
 
   it("should deactivate a category", (): void => {
