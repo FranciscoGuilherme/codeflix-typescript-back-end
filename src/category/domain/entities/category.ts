@@ -60,7 +60,7 @@ export class Category extends Entity<CategoryProperties> {
   }
 
   static validate(props: Omit<CategoryProperties, "createdAt">): void {
-    ValidatorRules.values(props.name, "name").required().string();
+    ValidatorRules.values(props.name, "name").required().string().maxLength(255);
     ValidatorRules.values(props.description, "description").string();
     ValidatorRules.values(props.isActive, "isActive").boolean();
   }
