@@ -165,4 +165,54 @@ describe("Unit tests for validator rules class", (): void => {
       }).toThrow(new ValidationError("The field must be a boolean"));
     });
   });
+
+  it("should throw an validation error when combine two or more validation rules for string operations", (): void => {
+    type ScenariosProperties = { value: any; error: string; };
+    const scenarios: ScenariosProperties[] = [
+      { value: null, error: "The field is required" },
+      { value: 5, error: "The field must be a string" },
+      { value: "Something", error: "The field must be less or equal then 5 characters" }
+    ];
+
+    scenarios.forEach((scenario: ScenariosProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(scenario.value, "field").required().string().maxLength(5)
+      }).toThrow(scenario.error);
+    });
+  });
+
+  it("should throw an validation error when combine two or more validation rules for boolean operations", (): void => {
+    type ScenariosProperties = { value: any; error: string; };
+    const scenarios: ScenariosProperties[] = [
+      { value: null, error: "The field is required" },
+      { value: 5, error: "The field must be a boolean" },
+      { value: {}, error: "The field must be a boolean" }
+    ];
+
+    scenarios.forEach((scenario: ScenariosProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(scenario.value, "field").required().boolean()
+      }).toThrow(scenario.error);
+    });
+  });
+
+  it("should validate combination of two or more validation rules for string operations", (): void => {
+    jest.spyOn(ValidatorRules.prototype, "string");
+    jest.spyOn(ValidatorRules.prototype, "maxLength");
+    type ScenariosProperties = { value: any; error: string; };
+    const scenarios: ScenariosProperties[] = [
+      { value: null, error: "The field is required" },
+      { value: undefined, error: "The field is required" },
+      { value: "Something", error: "The field must be less or equal then 15 characters" }
+    ];
+
+    scenarios.forEach((scenario: ScenariosProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(scenario.value, "field").string().maxLength(15)
+      }).not.toThrow(scenario.error);
+    });
+
+    expect(ValidatorRules.prototype.string).toBeCalledTimes(3);
+    expect(ValidatorRules.prototype.maxLength).toBeCalledTimes(3);
+  });
 });
