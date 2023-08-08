@@ -14,6 +14,7 @@ describe("Unit tests for validator rules class", (): void => {
     type TypeStatusProperties = { value: any }
     const validProperties: TypeStatusProperties[] = [
       { value: 0 },
+      { value: {} },
       { value: 10 },
       { value: -10 },
       { value: 10.5 },
@@ -27,7 +28,7 @@ describe("Unit tests for validator rules class", (): void => {
         ValidatorRules.values(item.value, "field").required();
       }).not.toThrow(new ValidationError("The field is required"));
     });
-  })
+  });
 
   it("should validate if is required for invalid fields", (): void => {
     type TypeStatusProperties = { value: any }
@@ -41,6 +42,127 @@ describe("Unit tests for validator rules class", (): void => {
       expect((): void => {
         ValidatorRules.values(item.value, "field").required();
       }).toThrow(new ValidationError("The field is required"));
+    });
+  });
+
+  it("should validate if is string for valid fields", (): void => {
+    type TypeStatusProperties = { value: any }
+    const validProperties: TypeStatusProperties[] = [
+      { value: "0" },
+      { value: null },
+      { value: "10" },
+      { value: "-10" },
+      { value: "10.5" },
+      { value: "true" },
+      { value: "false" },
+      { value: undefined },
+      { value: "valid value" },
+      { value: "there is something there" }
+    ];
+
+    validProperties.forEach((item: TypeStatusProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(item.value, "field").string();
+      }).not.toThrow(new ValidationError("The field must be a string"));
+    });
+  });
+
+  it("should validate if is string for invalid fields", (): void => {
+    type TypeStatusProperties = { value: any }
+    const validProperties: TypeStatusProperties[] = [
+      { value: 0 },
+      { value: {} },
+      { value: 10 },
+      { value: -10 },
+      { value: 10.5 },
+      { value: true },
+      { value: false }
+    ];
+
+    validProperties.forEach((item: TypeStatusProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(item.value, "field").string();
+      }).toThrow(new ValidationError("The field must be a string"));
+    });
+  });
+
+  it("should validate if has the right length", (): void => {
+    type TypeStatusProperties = { value: any, length: number }
+    const validProperties: TypeStatusProperties[] = [
+      { value: "1", length: 10 },
+      { value: null, length: 0 },
+      { value: "100", length: 10 },
+      { value: "2000", length: 10 },
+      { value: "10.5", length: 10 },
+      { value: "true", length: 10 },
+      { value: "false", length: 10 },
+      { value: "string", length: 10 },
+      { value: undefined, length: 0 }
+    ];
+
+    validProperties.forEach((item: TypeStatusProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(item.value, "field").maxLength(item.length);
+      }).not.toThrow(
+        new ValidationError(
+          `The field must be less or equal then ${item.length} characters`
+        )
+      );
+    });
+  });
+
+  it("should validate if has the wrong length", (): void => {
+    type TypeStatusProperties = { value: any, length: number }
+    const validProperties: TypeStatusProperties[] = [
+      { value: "100", length: 2 },
+      { value: "2000", length: 2 },
+      { value: "10.5", length: 2 },
+      { value: "true", length: 2 },
+      { value: "false", length: 2 },
+      { value: "string", length: 2 }
+    ];
+
+    validProperties.forEach((item: TypeStatusProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(item.value, "field").maxLength(item.length);
+      }).toThrow(
+        new ValidationError(
+          `The field must be less or equal then ${item.length} characters`
+        )
+      );
+    });
+  });
+
+  it("should validate if is boolean for valid fields", (): void => {
+    type TypeStatusProperties = { value: any }
+    const validProperties: TypeStatusProperties[] = [
+      { value: null },
+      { value: true },
+      { value: false },
+      { value: undefined }
+    ];
+
+    validProperties.forEach((item: TypeStatusProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(item.value, "field").boolean();
+      }).not.toThrow(new ValidationError("The field must be a boolean"));
+    });
+  });
+
+  it("should validate if is boolean for invalid fields", (): void => {
+    type TypeStatusProperties = { value: any }
+    const validProperties: TypeStatusProperties[] = [
+      { value: 0 },
+      { value: {} },
+      { value: 10 },
+      { value: -10 },
+      { value: 10.5 }
+    ];
+
+    validProperties.forEach((item: TypeStatusProperties): void => {
+      expect((): void => {
+        ValidatorRules.values(item.value, "field").boolean();
+      }).toThrow(new ValidationError("The field must be a boolean"));
     });
   });
 });
