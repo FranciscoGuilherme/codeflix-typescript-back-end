@@ -8,7 +8,8 @@
         "value-objects",
         "seedwork",
         "project",
-        "validators"
+        "validators",
+        "tests"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#fbed80",
