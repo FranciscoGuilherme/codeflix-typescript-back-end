@@ -1,6 +1,6 @@
 import { validate as uuidValidate } from "uuid";
 import UniqueEntityId from "@seedwork/domain/value-objects/unique-entity-id.vo";
-import InvalidUuidError from "@seedwork/errors/invalid-uuid.error";
+import InvalidUuidError from "@seedwork/domain/errors/invalid-uuid.error";
 
 describe("Unit tests for ID value object", (): void => {
   let validateSpy: jest.SpyInstance;

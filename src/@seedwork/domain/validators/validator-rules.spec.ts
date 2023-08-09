@@ -1,5 +1,5 @@
-import ValidatorRules from "@seedwork/validators/validator-rules";
-import ValidationError from "@seedwork/errors/validation-error";
+import ValidatorRules from "@seedwork/domain/validators/validator-rules";
+import ValidationError from "@seedwork/domain/errors/validation-error";
 
 describe("Unit tests for validator rules class", (): void => {
   it("should create an instance of ValidatorRules correctly", (): void => {

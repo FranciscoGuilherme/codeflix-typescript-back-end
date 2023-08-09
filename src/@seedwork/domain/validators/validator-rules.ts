@@ -1,5 +1,5 @@
 import { Omit } from "lodash";
-import ValidationError from "@seedwork/errors/validation-error";
+import ValidationError from "@seedwork/domain/errors/validation-error";
 
 export default class ValidatorRules {
   private constructor(private value: any, private property: string) {}

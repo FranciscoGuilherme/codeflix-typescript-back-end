@@ -1,5 +1,5 @@
 import { Category } from "./category";
-import ValidationError from "@seedwork/errors/validation-error";
+import ValidationError from "@seedwork/domain/errors/validation-error";
 
 describe("Integration tests for entity Category", (): void => {
   it("should throw an error when try to create a Category with an invalid name", (): void => {
