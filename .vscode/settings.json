@@ -7,7 +7,8 @@
         "entity-category",
         "value-objects",
         "seedwork",
-        "project"
+        "project",
+        "validators"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#fbed80",
