@@ -2,8 +2,8 @@ import { validateSync, ValidationError } from "class-validator";
 import ValidatorFieldsInterface, { FieldsErrors } from "@seedwork/validators/validator-fields-interface";
 
 export abstract class ClassValidatorFields<PropsValidated> implements ValidatorFieldsInterface<PropsValidated> {
-  errors: FieldsErrors;
-  validatedData: PropsValidated;
+  errors: FieldsErrors = null;
+  validatedData: PropsValidated = null;
 
   validate(data: any): boolean {
     const errors: ValidationError[] = validateSync(data);
