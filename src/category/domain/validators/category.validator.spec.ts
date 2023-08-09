@@ -41,10 +41,39 @@ describe("Unit and Integration tests for entity category", (): void => {
     ];
 
     invalidCases.forEach((item: InvalidCasesProperties): void => {
-      const isValid: boolean = validator.validate({ name: item.value });
+      expect({ validator, data: { name: item.value } }).containsErrorMessage({
+        name: item.errors
+      });
+    });
+  });
 
-      expect(isValid).toBeFalsy();
-      expect(validator.errors["name"]).toStrictEqual(item.errors);
+  it("should test invalid cases for description field", (): void => {
+    expect({ validator, data: { description: 5 } }).containsErrorMessage({
+      description: [
+        "description must be a string"
+      ]
+    });
+  });
+
+  it("should test invalid cases for isActive field", (): void => {
+    type InvalidCasesProperties = { value: any; };
+    const invalidCases: InvalidCasesProperties[] = [
+      { value: 5 },
+      { value: 5.0 },
+      { value: " " },
+      { value: null },
+      { value: true },
+      { value: false },
+      { value: undefined },
+      { value: "t".repeat(256) }
+    ];
+
+    invalidCases.forEach((item: InvalidCasesProperties): void => {
+      expect({ validator, data: { isActive: item.value } }).containsErrorMessage({
+        isActive: [
+          "isActive must be a boolean"
+        ]
+      });
     });
   });
 
