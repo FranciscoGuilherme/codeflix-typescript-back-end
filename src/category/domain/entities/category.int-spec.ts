@@ -1,11 +1,9 @@
 import { Category } from "./category";
-import ValidationError from "@seedwork/domain/errors/validation-error";
 
 describe("Integration tests for entity Category", (): void => {
   it("should throw an error when try to create a Category with an invalid name", (): void => {
     type InvalidValuesProperties = { value: any };
     const invalidValues: InvalidValuesProperties[] = [
-      { value: "" },
       { value: null },
       { value: undefined }
     ];
@@ -13,12 +11,24 @@ describe("Integration tests for entity Category", (): void => {
     invalidValues.forEach((item: InvalidValuesProperties): void => {
       expect((): void => {
         new Category({ name: item.value });
-      }).toThrow(new ValidationError("The name is required"));
+      }).containsErrorMessage({
+        name: [
+          "name should not be empty",
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters"
+        ]
+      });
     });
 
     expect((): void => {
+      new Category({ name: "" });
+    }).containsErrorMessage({ name: [ "name should not be empty" ] });
+
+    expect((): void => {
       new Category({ name: "t".repeat(256) });
-    }).toThrow(new ValidationError("The name must be less or equal then 255 characters"));
+    }).containsErrorMessage({
+      name: ["name must be shorter than or equal to 255 characters" ]
+    });
   });
 
   it("should throw an error when try to create a Category with an invalid description", (): void => {
@@ -34,7 +44,9 @@ describe("Integration tests for entity Category", (): void => {
     invalidValues.forEach((item: InvalidValuesProperties): void => {
       expect((): void => {
         new Category({ name: "Documentary", description: item.value });
-      }).toThrow(new ValidationError("The description must be a string"));
+      }).containsErrorMessage({
+        name: [ "name must be a string" ]
+      });
     });
   });
 
@@ -51,14 +63,15 @@ describe("Integration tests for entity Category", (): void => {
     invalidValues.forEach((item: InvalidValuesProperties): void => {
       expect((): void => {
         new Category({ name: "Documentary", isActive: item.value });
-      }).toThrow(new ValidationError("The isActive must be a boolean"));
+      }).containsErrorMessage({
+        name: [ "name must be a boolean" ]
+      });
     });
   });
 
   it("should throw an error when try to update a Category with an invalid name", (): void => {
     type InvalidValuesProperties = { value: any };
     const invalidValues: InvalidValuesProperties[] = [
-      { value: "" },
       { value: null },
       { value: undefined }
     ];
@@ -67,12 +80,22 @@ describe("Integration tests for entity Category", (): void => {
     invalidValues.forEach((item: InvalidValuesProperties): void => {
       expect((): void => {
         category.update(item.value);
-      }).toThrow(new ValidationError("The name is required"));
+      }).containsErrorMessage({
+        name: [
+          "name should not be empty",
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters"
+        ]
+      });
     });
 
     expect((): void => {
       category.update("t".repeat(256));
-    }).toThrow(new ValidationError("The name must be less or equal then 255 characters"));
+    }).containsErrorMessage({
+      name: [
+        "name must be shorter than or equal to 255 characters"
+      ]
+    });
   });
 
   it("should throw an error when try to update a Category with an invalid description", (): void => {
@@ -88,8 +111,12 @@ describe("Integration tests for entity Category", (): void => {
 
     invalidValues.forEach((item: InvalidValuesProperties): void => {
       expect((): void => {
-        category.update("Movie", item.value);
-      }).toThrow(new ValidationError("The description must be a string"));
+        category.update(null, item.value);
+      }).containsErrorMessage({
+        name: [
+          "description must be a string",
+        ]
+      });
     });
   });
 
